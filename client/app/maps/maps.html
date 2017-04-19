@@ -1,0 +1,140 @@
+
+
+<div class="container">
+    <div id="map_canvas"  class="col-md-7">
+        <div>
+            <p><label for="riverSelect">Seleccione Cuenca</label>
+                <select name="riverSelect" ng-model="id" ng-options="m.id as m.name for m in rivers"></select>
+                <button ng-click="loadData(target2, id)" class="boton">Seleccionar</button>
+            </p>
+
+        </div>
+        <ui-gmap-google-map center="mapsCtrl.map.center" zoom="mapsCtrl.map.zoom" events="mapsCtrl.map.events" options="mapsCtrl.options">
+            <!-- <ui-gmap-markers models="markers" idKey="'id'" coords="'self'" events="map.markersEvents" options="map.markerOptions" icon="'icon'">
+            </ui-gmap-markers>
+
+            <ui-gmap-window
+                    show="map.window.show"
+                    coords="map.window.model"
+                    templateUrl="'views/infoWindow.html'"
+                    templateParameter="map.window.model"
+                    options="map.window.options"
+                    ng-cloak>
+            </ui-gmap-window> -->
+
+        </ui-gmap-google-map>
+
+        <div class="quartile">
+            <h4>Rangos de muestra sensores</h4>
+            <h5>Nombre de cuenca: {{quartiles.stationName}}</h5>
+            <table class="table">
+                <tr>
+                    <th>Metrica</th>
+                    <th>V. Minimo</th>
+                    <th>V. Bajo</th>
+                    <th>V. Medio</th>
+                    <th>V. Alto</th>
+                    <th>V. Maximo</th>
+                </tr>
+                <tr>
+                    <td>Caudal</td>
+                    <td>{{quartiles.cauMin}}</td>
+                    <td>{{quartiles.cauLow}}</td>
+                    <td>{{quartiles.cauMid}}</td>
+                    <td>{{quartiles.cauHigh}}</td>
+                    <td>{{quartiles.cauMax}}</td>
+                </tr>
+                <tr>
+                    <td>Humedad</td>
+                    <td>{{quartiles.humMin}}</td>
+                    <td>{{quartiles.humLow}}</td>
+                    <td>{{quartiles.humMid}}</td>
+                    <td>{{quartiles.humHigh}}</td>
+                    <td>{{quartiles.humMax}}</td>
+                </tr>
+                <tr>
+                    <td>Temperatura</td>
+                    <td>{{quartiles.tempMin}}</td>
+                    <td>{{quartiles.tempLow}}</td>
+                    <td>{{quartiles.tempMid}}</td>
+                    <td>{{quartiles.tempHigh}}</td>
+                    <td>{{quartiles.tempMax}}</td>
+                </tr>
+                <tr>
+                    <td>Precipitaciones</td>
+                    <td>{{quartiles.prepMin}}</td>
+                    <td>{{quartiles.prepLow}}</td>
+                    <td>{{quartiles.prepMid}}</td>
+                    <td>{{quartiles.prepHigh}}</td>
+                    <td>{{quartiles.prepMax}}</td>
+                </tr>
+                <tr>
+                    <td>Nieve</td>
+                    <td>{{quartiles.otherMin}}</td>
+                    <td>{{quartiles.otherLow}}</td>
+                    <td>{{quartiles.otherMid}}</td>
+                    <td>{{quartiles.otherHigh}}</td>
+                    <td>{{quartiles.otherMax}}</td>
+                </tr>
+            </table>
+            <p>Caudal</p>
+            <canvas id="line" class="chart chart-line" chart-data="dataCau"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+            <p>Humedad</p>
+            <canvas id="line" class="chart chart-line" chart-data="dataHum"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+            <p>Temperatura</p>
+            <canvas id="line" class="chart chart-line" chart-data="dataTemp"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+
+
+            <p>Precipitaciones</p>
+            <canvas id="line" class="chart chart-line" chart-data="dataPrep"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+            <p>Nieve</p>
+            <canvas id="line" class="chart chart-line" chart-data="dataOther"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-md-5" >
+        <div class="reports" >
+            <h3>Revision de estado</h3>
+
+
+            <form>
+                Rango de muestra(hrs): <input type="number" ng-model="target2">
+                <button ng-click="loadData(target2, id)">Consultar</button>
+            </form>
+
+            <table class="table">
+                <tr>
+                    <th>Nombre estacion</th>
+                    <th>Promedio Temperatura</th>
+                    <th>Promedio Humedad</th>
+                    <th>Promedio Caudal</th>
+                </tr>
+                <tr ng-repeat="dato in datos">
+                    <td>{{dato.name}} </td>
+                    <td>{{dato.tempData}} ºC</td>
+                    <td>{{dato.humData}} %</td>
+                    <td>{{dato.caudalData}} m3/seg</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
