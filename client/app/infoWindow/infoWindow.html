@@ -1,0 +1,16 @@
+<div ng-controller="InfoWindowController as infoCtrl" ng-init="infoCtrl.init(parameter.id)">
+   <p> Nombre de estacion: {{parameter.description}}</p>
+    <p>Comportamiento ultimas 5 horas</p>
+    <p> Estado Sensores </p>
+    <p>Caudal : <img src="{{infoCtrl.cauStatusIcon}}"> </p>
+    <p>Temperatura : <img src="{{infoCtrl.tempStatusIcon}}"></p>
+    <p>Humedad: <img src="{{infoCtrl.humStatusIcon}}"></p>
+    <p>Precipitaciones: <img src="{{infoCtrl.precipStatusIcon}}"></p>
+    <p ng-if="snowStatus">Nieve : <img src="{{infoCtrl.snowStatusIcon}}"></p>
+   <canvas id="line" class="chart chart-line" chart-data="infoCtrl.posData"
+           chart-labels="infoCtrl.labels" chart-series="infoCtrl.series" chart-options="infoCtrl.options"
+           chart-dataset-override="infoCtrl.datasetOverride" chart-click="onClick">
+   </canvas>
+
+
+</div>

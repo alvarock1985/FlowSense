@@ -1,0 +1,28 @@
+<div class="container">
+  <div id="map_canvas"  class="col-md-7">
+        <h4>Seleccione ubicacion estación</h4>
+        <ui-gmap-google-map center="addStationCtrl.map.center" zoom="addStationCtrl.map.zoom" events="addStationCtrl.map.events" options="addStationCtrl.options">
+            <ui-gmap-marker ng-repeat="m in addStationCtrl.map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+        </ui-gmap-google-map>
+
+    </div>
+
+    <div class="col-md-5">
+        <br>
+        <h3>Agregue los datos de la estacion</h3>
+        <form ng-submit="addStationCtrl.postData(lat, lon)">
+            Nombre:<br>
+            <input type="text" ng-model="addStationCtrl.name" required><br>
+            Descripcion:<br> <input type="text" ng-model="addStationCtrl.description" required><br>
+            Tipo: <br> <input type="text" ng-model="addStationCtrl.type" required><br>
+            Cauce: <br> <select name="addStationCtrl.riverId" ng-model="addStationCtrl.riverId" ng-options="m.id as m.name for m in addStationCtrl.rivers" required></select><br>
+            Longitud:  <br> {{addStationCtrl.longitude}} {{lon}}<br>
+            Latitud: <br> {{addStationCtrl.latitude}} {{lat}}<br>
+            <br>
+            <input type="submit" value="Enviar">
+            <br>
+            <br>
+            <h5>Estado: {{addStationCtrl.status}}</h5>
+        </form>
+    </div>
+</div>

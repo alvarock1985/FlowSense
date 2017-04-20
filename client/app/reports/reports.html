@@ -1,0 +1,21 @@
+<div class="container" pdf-save-content="hola">
+
+    <h3>Reporte comportamiento para la estacion: {{datos.name}}</h3>
+    <h5> Rango de muestra(hrs): <input type="number" ng-model="reportsCtrl.targetHours"></h5>
+    <h5>        <label for="refresh">Seleccionar estacion para mostrar</label>
+        <select name="refresh" ng-model="reportsCtrl.stationId" ng-options="m.id as m.description for m in reportsCtrl.stations">
+        </select></h5>
+    <h5><span class="bordes">Promedio Temperatura: {{datos.tempData}}</span> <span class="bordes" >Promedio Humedad: {{datos.humData}}</span> <span class="bordes">Promedio Caudal: {{datos.caudalData}}</span></h5>
+
+        <button ng-click="reportsCtrl.loadStationData(reportsCtrl.stationId, reportsCtrl.targetHours)" class="boton">Consultar</button>
+    <button pdf-save-button="hola" pdf-name="someone.pdf" class="boton">Descargar reporte</button>
+
+
+    <canvas id="line" class="chart chart-line" chart-data="reportsCtrl.posData"
+            chart-labels="reportsCtrl.labels" chart-series="reportsCtrl.series" chart-options="reportsCtrl.options"
+            chart-dataset-override="reportsCtrl.datasetOverride" chart-click="onClick">
+    </canvas>
+
+
+
+</div>

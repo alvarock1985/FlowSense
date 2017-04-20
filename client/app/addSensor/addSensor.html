@@ -1,0 +1,18 @@
+<div class="container">
+  <h3>Agregue los datos del sensor</h3>
+    <form ng-submit="addSensorCtrl.postData()">
+        Metrica del Sensor: <br>
+        <select name="sensorName" ng-model="addSensorCtrl.name" ng-options="i as i for i in addSensorCtrl.names" required></select><br>
+        Tipo de Sensor: {{type}}<br>
+        <select name="sensorType" ng-model="addSensorCtrl.type" ng-options="i as i for i in addSensorCtrl.types" required></select><br>
+        Estacion: <br>
+        <select name="station" ng-model="addSensorCtrl.stationId" ng-options="m.id as m.description for m in addSensorCtrl.stations" required></select><br>
+        <br>
+        <input type="submit" value="Enviar">
+        <br>
+        <br>
+        <h5>Estado: {{addSensorCtrl.status}}</h5>
+
+    </form>
+
+</div>

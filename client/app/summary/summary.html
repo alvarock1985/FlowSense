@@ -1,0 +1,42 @@
+<div class="container">
+  <h3>Resumen estaciones configuradas</h3>
+
+  <table class="table" id="table1">
+      <thead>
+          <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Revisar</th>
+          </tr>
+
+      </thead>
+      <tbody ng-repeat="station in summaryCtrl.stations">
+          <tr>
+              <td>{{station.name}}</td>
+              <td>{{station.description}}</td>
+              <td>{{station.type}}</td>
+              <td>{{station.status}}</td>
+              <td><input type="checkbox" ng-model="station.checkStatus" ng-change="summaryCtrl.getSensors(station.id)"></td>
+          </tr>
+          <tr ng-show="station.checkStatus">
+              <th>Sensores en estacion</th>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+          </tr>
+          <tr ng-show="station.checkStatus" ng-repeat="sensor in summaryCtrl.sensors">
+              <td></td>
+              <td>{{sensor.id}}</td>
+              <td>{{sensor.name}}</td>
+              <td>{{sensor.type}}</td>
+              <td>{{sensor.status}}</td>
+          </tr>
+
+      </tbody>
+
+
+  </table>
+ </div>

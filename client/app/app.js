@@ -1,7 +1,7 @@
 'use strict';
 
 import angular from 'angular';
-// import ngAnimate from 'angular-animate';
+import ngAnimate from 'angular-animate';
 import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
@@ -10,6 +10,8 @@ import ngSanitize from 'angular-sanitize';
 import 'angular-socket-io';
 import 'angular-google-maps';
 import 'angular-simple-logger';
+import 'angular-chart.js';
+
 
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
@@ -29,20 +31,32 @@ import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 import maps from './maps/maps.component';
-import stationDataService from './stationData/stationData.service';
+import infoWindow from './infoWindow/infoWindow.component';
+import infoWindowController from './infoWindow/infoWindow.controller';
+import Reports from './reports/reports.component';
+import config from './config/config.component';
+import addStation from './addStation/addStation.component';
+import addSensor from './addSensor/addSensor.component';
+import summary from './summary/summary.component';
+import failEmulator from './failEmulator/failEmulator.component';
+import failStation from './failStation/failStation.component';
+import failSensor from './failSensor/failSensor.component';
+
+
 
 
 import './app.scss';
 
 angular.module('flowSenseApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
-  socket, util, maps, 'nemLogging', 'uiGmapgoogle-maps', stationDataService
+  socket, util, maps, 'nemLogging', 'uiGmapgoogle-maps', ngAnimate, infoWindow, infoWindowController,
+  'chart.js', Reports, config, addStation, addSensor, summary, failEmulator, failStation, failSensor
 ])
   .config(routeConfig)
 
   .config(function(uiGmapGoogleMapApiProvider) {
     'ngInject';
-  uiGmapGoogleMapApiProvider.configure({
+    uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyCACDsAHFTvNYxCCZDRgt-GMO12SH1n08k',
     v: '3.20', //defaults to latest 3.X anyhow
     libraries: 'weather,geometry,visualization'

@@ -1,0 +1,15 @@
+<div class="container">
+  <H3>Emulador de fallas</H3>
+  <H4>Seleccione Estacion para modificar</H4>
+  <form ng-submit="failStationCtrl.postData()">
+      Estacion:<br>
+      <select name="stationName" ng-model="failStationCtrl.stationId" ng-options="m.id as m.description for m in failStationCtrl.stations" required></select><br>
+      Estado: <br>
+      <select name="status" ng-model="failStationCtrl.status" ng-options="i as i for i in failStationCtrl.statusList" required></select><br>
+      <br>
+      <input type="submit" value="Enviar">
+      <br>
+      <br>
+      <p>Estado: {{failStationCtrl.sendStatus}}</p>
+  </form>
+</div>
