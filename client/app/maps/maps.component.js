@@ -108,11 +108,12 @@ export class MapsComponent {
     this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/stations/'+this.watershedId)
     .then(response => {
       this.markers = response.data;
+      console.log(this.markers)
       for(var i in this.markers){
                   if(this.markers[i].status==="FAIL"){
-                      this.markers.icon = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFF0000"
-                  }else if(this.markers.status==="WARN"){
-                      this.markers[i] = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFFFF00"
+                      this.markers[i].icon = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFF0000"
+                  }else if(this.markers[i].status==="WARN"){
+                      this.markers[i].icon = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFFFF00"
                   }else {
                       this.markers[i].icon = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7C00FF00"
                   }

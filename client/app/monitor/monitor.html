@@ -1,0 +1,15 @@
+<div class="container">
+  <form ng-submit="monitorCtrl.sendConfig()">
+    <select class="" name="select Interval" ng-model="monitorCtrl.interval" ng-options="i as i for i in monitorCtrl.selectInterval">
+    </select>
+    <input type="submit" name="" value="enviar">
+  </form>
+  <br>
+  <br>
+  <br>
+  <p>{{monitorCtrl.configInterval}}</p>
+  <div ng-repeat="m in monitorCtrl.configInterval">
+    <p>{{m.interval}}</p>
+
+  </div>
+</div>

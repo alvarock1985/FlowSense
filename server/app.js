@@ -10,6 +10,10 @@ mongoose.Promise = require('bluebird');
 import config from './config/environment';
 import http from 'http';
 import seedDatabaseIfNeeded from './config/seed';
+import request from 'request';
+import statusMonitor from './config/monitor';
+import sendEmail from './config/mailer';
+import checkMonitorInterval from './api/monoptions/checkInterval';
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -36,6 +40,54 @@ function startServer() {
   });
 }
 
+
+
+// socketio.on('connection', function(socket){
+//   console.log('hola 2');
+//   var i = 0;
+//   var url = 'http://localhost:3000/api/cosass';
+//
+//   setInterval(function(){
+//     var requestData = {
+//       cosas : i
+//     };
+//     request({
+//     url: url,
+//     method: "POST",
+//     json: requestData
+//
+//     },function (error, response, body) {
+//         if (!error && response.statusCode === 200) {
+//             console.log(body)
+//         }
+//         else {
+//             console.log(body)
+//             console.log("error: " + error)
+//             console.log("response.statusCode: " + response.statusCode)
+//             console.log("response.statusText: " + response.statusText)
+//           }
+//         })
+//       i++;
+//     }, 1000);
+//
+// });
+
+
+
+
+var defaultReq = {
+  interval : 30000
+}
+
+
+
+
+
+
+
+var interval = checkMonitorInterval(defaultReq);
+console.log("inverval: "+interval);
+statusMonitor(interval);
 seedDatabaseIfNeeded();
 setImmediate(startServer);
 

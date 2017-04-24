@@ -6,17 +6,20 @@ export class MainController {
   $http;
   socket;
   awesomeThings = [];
+  numeros = [];
   newThing = '';
 
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket ) {
     this.$http = $http;
     this.socket = socket;
-
+    this.cosas = [1,2,3,4];
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
+
     });
   }
+
 
   $onInit() {
     this.$http.get('/api/things')
@@ -44,6 +47,8 @@ export default angular.module('flowSenseApp.main', [uiRouter])
   .config(routing)
   .component('main', {
     template: require('./main.html'),
-    controller: MainController
+    controller: MainController,
+    controllerAs: 'mainCtrl'
+
   })
   .name;
