@@ -8,15 +8,17 @@ import routes from './rtm.routes';
 export class RtmComponent {
   $interval;
   $scope;
+  $http;
 
   /*@ngInject*/
-  constructor($interval, $scope) {
+  constructor($interval, $scope, $http) {
+    this.$http = $http;
     this.$interval = $interval;
     this.$scope = $scope;
     this.valores = [];
     this.number = '';
     this.number2= '';
-
+    this.dataSensor = [];
     $scope.labels = [];
     $scope.series = ["series A"];
     $scope.data = [[]];
@@ -60,12 +62,18 @@ export class RtmComponent {
                 id: 'y-axis-1',
                 type: 'linear',
                 display: true,
-                position: 'left'
+                position: 'left',
+                ticks: {
+                  max: 15
+                }
             }, {
                 id: 'y-axis-2',
                 type: 'linear',
                 display: true,
-                position: 'right'
+                position: 'right',
+                ticks: {
+                  max: 15
+                }
             }]
         }
     };
@@ -74,7 +82,8 @@ export class RtmComponent {
   }
 
   $onInit(){
-    this.$interval(() =>this.getLiveChartData(), 1000)
+    this.loadSensorData();
+    this.$interval(() => this.reloadData(), 5000)
   }
 
 
@@ -89,22 +98,48 @@ export class RtmComponent {
 
 
 
-   getLiveChartData () {
-     var maximum = 50;
-      if (this.$scope.data[0].length) {
-        this.$scope.labels = this.$scope.labels.slice(1);
-        this.$scope.data[0] = this.$scope.data[0].slice(1);
+  loadSensorData(){
+    this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/last/30/57')
+    .then(response => {
+      this.dataSensor = response.data;
+      for (var i in this.dataSensor){
+        this.$scope.data[0].push(this.dataSensor[i].data);
+        this.$scope.labels.push(this.dataSensor[i].timestamp);
       }
+    })
 
-      while (this.$scope.data[0].length < maximum) {
-        this.$scope.labels.push('');
-        this.number2 = Math.round((Math.random()*20)+1);
-        this.$scope.data[0].push(this.number2);
+    console.log(this.$scope.data[0]);
+  }
+
+  reloadData(){
+    this.$scope.labels = this.$scope.labels.slice(1);
+    this.$scope.data[0] = this.$scope.data[0].slice(1);
+    this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/last/1/57')
+    .then(response => {
+      var value = response.data[0].data;
+      this.$scope.data[0].push(value);
+      this.$scope.labels.push(response.data[0].timestamp);
+    })
+  }
+
+
+   getLiveChartData () {
+
+        //console.log(this.$scope.dataSensor)
+        // for(var i in this.$scope.dataSensor){
+        //   this.$scope.data[0].push(this.$scope.dataSensor[i].data)
+        // }
+
+
+
+        //this.number2 = Math.round((Math.random()*20)+1);
+        //this.$scope.data[0].push(this.number2);
+        //console.log(this.$scope.data[0])
       }
     }
 
 
-}
+
 
 export default angular.module('flowSenseApp.rtm', [uiRouter])
   .config(routes)

@@ -15,7 +15,7 @@ export default function statusMonitor(_interval){
   var emailId = 'test@example.com';
 
   var checkInterval = function(){
-    unirest.get('http://localhost:3000/api/monoptions/58ff4d1514f3cf04e8ee4dd2')
+    unirest.get('http://localhost:3000/api/monoptions/58ff804b77f37506481e5289')
     .end(function(response){
       var newInterval = response.body.interval*60000;
       emailId = response.body.emailId;
@@ -57,7 +57,26 @@ export default function statusMonitor(_interval){
     })
   }
 
-  var startMonitor = setInterval(monitor, 10000);
+  var dummyData = function(){
+    var dataValue = Math.round((Math.random()*30)+1);
+    var dataId = '';
+    var timestamp = '';
+    var sensorId = 55;
 
+    console.log(dataValue);
+    var url = 'http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/add/proto'
+      unirest.post(url)
+      .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+      .send({ "data": dataValue, "sensorId":55 })
+      .end(function (response) {
+        console.log(response.status);
+});
+
+
+  }
+
+
+  var startMonitor = setInterval(monitor, 10000);
+  var insertDummy = setInterval(dummyData, 5000);
   var checkStatus = setInterval(checkInterval, 10000);
 }
