@@ -4,18 +4,18 @@
 
 'use strict';
 
-import MonoptionsEvents from './monoptions.events';
+import RtmEvents from './rtm.events';
 
 // Model events to emit
-var events = ['save', 'remove', 'update'];
+var events = ['save', 'remove'];
 
 export function register(socket) {
   // Bind model events to socket events
   for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
     var event = events[i];
-    var listener = createListener(`monoptions:${event}`, socket);
+    var listener = createListener(`rtm:${event}`, socket);
 
-    MonoptionsEvents.on(event, listener);
+    RtmEvents.on(event, listener);
     socket.on('disconnect', removeListener(event, listener));
   }
 }
@@ -29,6 +29,6 @@ function createListener(event, socket) {
 
 function removeListener(event, listener) {
   return function() {
-    MonoptionsEvents.removeListener(event, listener);
+    RtmEvents.removeListener(event, listener);
   };
 }

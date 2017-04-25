@@ -1,7 +1,7 @@
 'use strict';
  var nodemailer = require('nodemailer');
 
- export default function sendEmail(subject, message){
+ export default function sendEmail(subject, message, emailId){
    var smtpSettings = {
      service:"gmail",
      host:"smtp.gmail.com",
@@ -12,7 +12,7 @@
    };
     var smtpTransport = nodemailer.createTransport(smtpSettings);
     var mailOptions = {
-      to: 'a.cabrera.m85@gmail.com',
+      to: emailId,
       subject : subject,
       text : message
     }

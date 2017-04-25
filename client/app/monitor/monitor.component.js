@@ -13,27 +13,31 @@ export class MonitorComponent {
     this.$http = $http;
     this.socket = socket;
     this.inverval="";
+    this.emailId = '';
     this.configInterval = "";
+    this.configuration = null;
     this.selectInterval = [5, 10, 30, 60];
   }
 
   $onInit(){
     this.$http.get('/api/monoptions')
     .then(response =>{
-        this.configInterval = response.data;
-        this.socket.syncUpdates('monoptions', this.configInterval);
+        this.configuration = response.data[0];
+        this.configInterval = response.data[0].interval;
+        this.socket.syncUpdates('monoptions', this.configuration);
     })
   }
 
   sendConfig(){
     var data = {
-      interval : this.interval
+      interval : this.interval,
+      emailId : this.emailId
     }
     var toPost = JSON.stringify(data)
     this.$http.put('/api/monoptions/58fd301fd650ab36e5aee2d1', toPost)
     .then(response => {
       console.log(response.data);
-      
+
     });
   }
 

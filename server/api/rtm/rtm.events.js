@@ -1,36 +1,35 @@
 /**
- * Monoptions model events
+ * Rtm model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-var MonoptionsEvents = new EventEmitter();
+var RtmEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-MonoptionsEvents.setMaxListeners(0);
+RtmEvents.setMaxListeners(0);
 
 // Model events
 var events = {
   save: 'save',
-  remove: 'remove',
-  update: 'update'
+  remove: 'remove'
 };
 
 // Register the event emitter to the model events
-function registerEvents(Monoptions) {
+function registerEvents(Rtm) {
   for(var e in events) {
     let event = events[e];
-    Monoptions.post(e, emitEvent(event));
+    Rtm.post(e, emitEvent(event));
   }
 }
 
 function emitEvent(event) {
   return function(doc) {
-    MonoptionsEvents.emit(event + ':' + doc._id, doc);
-    MonoptionsEvents.emit(event, doc);
+    RtmEvents.emit(event + ':' + doc._id, doc);
+    RtmEvents.emit(event, doc);
   };
 }
 
 export {registerEvents};
-export default MonoptionsEvents;
+export default RtmEvents;

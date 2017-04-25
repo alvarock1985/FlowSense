@@ -1,15 +1,26 @@
 <div class="container">
-  <form ng-submit="monitorCtrl.sendConfig()">
-    <select class="" name="select Interval" ng-model="monitorCtrl.interval" ng-options="i as i for i in monitorCtrl.selectInterval">
-    </select>
-    <input type="submit" name="" value="enviar">
-  </form>
-  <br>
-  <br>
-  <br>
-  <p>{{monitorCtrl.configInterval}}</p>
-  <div ng-repeat="m in monitorCtrl.configInterval">
-    <p>{{m.interval}}</p>
+      <div class="col-sm-6">
+        <h3>Configuracion monitoreo</h3>
+        <div class="form-group">
+          <label for="number">Ingrese intervalo en minutos [1-60] {{monitorCtrl.interval}}</label>
+          <input type="number" ng-model="monitorCtrl.interval" class="form-control" id="number" min="1" max="60" required>
+          <label for="email">Ingrese Email para envio de alarmas {{monitorCtrl.emailId}}</label>
+          <input type="email" name="email" ng-model="monitorCtrl.emailId" class="form-control" required><br>
+          <button type="submit" name="button" class="btn btn-default" ng-click="monitorCtrl.sendConfig(); monitorCtrl.$onInit()">Enviar</button>
+        </div>
 
-  </div>
+
+      </div>
+
+      <div class="col-sm-6">
+
+        <h3>Configuracion actual</h3>
+        <table class="table">
+          <tr><p>Intervalo de monitoreo: {{monitorCtrl.configuration.interval}} minuto(s)</p></tr>
+          <tr><p>Envio de alertas: {{monitorCtrl.configuration.emailId}}</p></tr>
+        </table>
+
+
+
+      </div>
 </div>
