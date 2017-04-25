@@ -17,38 +17,41 @@ export class ReportsComponent {
     this.onClick = function (points, evt) {
         console.log(points, evt);
     };
-    this.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    this.datasetOverride = [{
+        xAxisID: 'x-axis-1',
+        showLines : true,
+        lineTension: 0
+    },
+    {
+        yAxisID: 'y-axis-1',
+        showLines: true,
+        lineTension: 0
+    }];
     this.options = {
         responsive: true,
-        scales: {
-            yAxes: [
-                {
-                    id: 'y-axis-1',
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    ticks: {
-                        max:30
-                    }
-                },
-                {
-                    id: 'y-axis-2',
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-                    ticks: {
-                        max:30
-                    }
-                }
-            ],
-            xAxes : [{
-                display: true,
-                position: 'bottom',
-                ticks: {
-                    minRotation: 90,
-                    maxRotation: 90
-                }
-            }],
+          scales: {
+          xAxes: [
+              {
+                  id: 'x-axis-1',
+                  type: 'linear',
+                  position: 'bottom',
+                  showLines: true,
+                  lineTension: 0,
+              },
+              {
+                  id: 'x-axis-2',
+                  position:'top',
+                  display: true
+              }
+          ],
+          yAxes: [
+              {
+                  id: 'y-axis-1',
+                  showLines: true,
+                  display: false,
+                  lineTension: 0
+              }
+          ],
             legend: [{
                 display:true
             }]

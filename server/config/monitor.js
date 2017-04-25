@@ -6,23 +6,23 @@ import sendEmail from './mailer';
 
 
 
-export default function statusMonitor(interval){
+export default function statusMonitor(_interval){
   var url ='http://mon.acmeapps.xyz:8080/EmuSensor/webapi/stations'
   var stations = [];
-  var interval = interval;
+  var interval = _interval;
   var newInterval = ''
   var isSame = false;
   var emailId = 'test@example.com';
 
   var checkInterval = function(){
-    unirest.get('http://localhost:3000/api/monoptions/58fd301fd650ab36e5aee2d1')
+    unirest.get('http://localhost:3000/api/monoptions/58ff4d1514f3cf04e8ee4dd2')
     .end(function(response){
       var newInterval = response.body.interval*60000;
       emailId = response.body.emailId;
       console.log(emailId);
       if(newInterval===interval){
         console.log("interval is same no changes required");
-        isSame = true;
+
       }else{
         interval = newInterval;
         console.log("interval has changed starting new monitor with "+(newInterval/1000)+" seconds of interval");
