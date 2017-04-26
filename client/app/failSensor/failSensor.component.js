@@ -35,7 +35,7 @@ export class FailSensorComponent {
   }
   postData(){
     var data = {
-      id: this.stationId,
+      id: this.sensorId,
       status: this.status
     }
     var toPost = JSON.stringify(data);

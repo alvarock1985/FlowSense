@@ -15,7 +15,7 @@ export default function statusMonitor(_interval){
   var emailId = 'test@example.com';
 
   var checkInterval = function(){
-    unirest.get('http://localhost:8080/api/monoptions')
+    unirest.get('http://localhost:3000/api/monoptions')
     .end(function(response){
       console.log(response.body);
       if(response.body.length){
@@ -53,12 +53,12 @@ export default function statusMonitor(_interval){
           message = "Station: "+stations[i].description+" is failed";
           subject= 'Station failed';
           console.log(emailId);
-          //sendEmail(subject, message, emailId);
+          sendEmail(subject, message, emailId);
         }else if(stations[i].status=== 'WARN'){
           console.log("Station: "+stations[i].description+" is on warning")
           message = "Station: "+stations[i].description+" is on warning";
           subject= 'Station warning';
-          //sendEmail(subject, message, emailId);
+          sendEmail(subject, message, emailId);
         }
       }
     })
