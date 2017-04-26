@@ -15,21 +15,28 @@ export default function statusMonitor(_interval){
   var emailId = 'test@example.com';
 
   var checkInterval = function(){
-    unirest.get('http://localhost:3000/api/monoptions/58ff804b77f37506481e5289')
+    unirest.get('http://localhost:8080/api/monoptions')
     .end(function(response){
-      var newInterval = response.body.interval*60000;
-      emailId = response.body.emailId;
-      console.log(emailId);
-      if(newInterval===interval){
-        console.log("interval is same no changes required");
+      console.log(response.body);
+      if(response.body.length){
+        var newInterval = response.body[0].interval*60000;
+        emailId = response.body[0].emailId;
+        console.log(emailId);
+        if(newInterval===interval){
+          console.log("interval is same no changes required");
+
+        }else{
+          interval = newInterval;
+          console.log("interval has changed starting new monitor with "+(newInterval/1000)+" seconds of interval");
+          isSame = false;
+          clearInterval(startMonitor);
+          var newMonitor = setInterval(monitor, newInterval);
+        }
 
       }else{
-        interval = newInterval;
-        console.log("interval has changed starting new monitor with "+(newInterval/1000)+" seconds of interval");
-        isSame = false;
-        clearInterval(startMonitor);
-        var newMonitor = setInterval(monitor, newInterval);
+        console.log("loading...");
       }
+
     });
   }
   var monitor = function(){

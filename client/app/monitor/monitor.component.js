@@ -24,6 +24,8 @@ export class MonitorComponent {
     .then(response =>{
         this.configuration = response.data[0];
         this.configInterval = response.data[0].interval;
+        this.configId = response.data[0]._id;
+        console.log(this.configId);
         this.socket.syncUpdates('monoptions', this.configuration);
     })
   }
@@ -34,7 +36,7 @@ export class MonitorComponent {
       emailId : this.emailId
     }
     var toPost = JSON.stringify(data)
-    this.$http.put('/api/monoptions/58fd301fd650ab36e5aee2d1', toPost)
+    this.$http.put('/api/monoptions/'+this.configId, toPost)
     .then(response => {
       console.log(response.data);
 
