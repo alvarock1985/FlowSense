@@ -17,11 +17,11 @@ export default function statusMonitor(_interval){
   var checkInterval = function(){
     unirest.get('http://localhost:3000/api/monoptions')
     .end(function(response){
-      console.log(response.body);
+      //console.log(response.body);
       if(response.body.length){
         var newInterval = response.body[0].interval*60000;
         emailId = response.body[0].emailId;
-        console.log(emailId);
+        //console.log(emailId);
         if(newInterval===interval){
           console.log("interval is same no changes required");
 
@@ -42,7 +42,7 @@ export default function statusMonitor(_interval){
   var monitor = function(){
     var subject = '';
     var message = '';
-    console.log(emailId)
+    //console.log(emailId)
 
     unirest.get(url)
     .end(function(response){
@@ -70,14 +70,14 @@ export default function statusMonitor(_interval){
     var timestamp = '';
     var sensorId = 55;
 
-    console.log(dataValue);
+    //console.log(dataValue);
     var url = 'http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/add/proto'
       unirest.post(url)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
       .send({ "data": dataValue, "sensorId":55 })
       .end(function (response) {
-        console.log(response.status);
-});
+        //console.log(response.status);
+      });
 
 
   }

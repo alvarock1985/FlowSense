@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="col-sm-6">
+    <form ng-submit="clientCtrl.postClient()">
+      <p>Seleccionar estacion: {{clientCtrl.stationId}}</p>
+      <select  name="stationId" ng-model="clientCtrl.stationId" ng-options="station.id as station.description for station in clientCtrl.stations" ng-change="clientCtrl.getSensors(clientCtrl.stationId)">
+      </select>
+      <p>Seleccionar sensor: {{clientCtrl.sensorId}}</p>
+      <select  name="sensorId" ng-model="clientCtrl.sensorId" ng-options="sensor.id as sensor.name for sensor in clientCtrl.sensors">
+
+      </select>
+      <p>Ingresar intervalo de monitoreo: </p>
+      <input type="number" ng-model="clientCtrl.monInterval">
+      <p>Ingresar rango minimo: </p>
+      <input type="number" ng-model="clientCtrl.rangeMin">
+      <p>Ingresar rango maximo: </p>
+      <input type="number" ng-model="clientCtrl.rangeMax"><br><br>
+      <p>Activar? {{clientCtrl.isActive}}</p>
+      <label class="switch">
+        <input type="checkbox" ng-model="clientCtrl.isActive">
+        <div class="slider round"></div>
+      </label><br><br>
+      <input type="submit" value="Enviar">
+
+    </form>
+  </div>
+
+  <div class="col-sm-6">
+    <ul ng-repeat="client in clientCtrl.clients">
+      <li>{{client._id}}<button type="button" name="borrar"  ng-click="clientCtrl.deleteClient(client)"></button></li>
+
+    </ul>
+
+  </div>
+</div>

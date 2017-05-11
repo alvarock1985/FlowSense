@@ -5,8 +5,12 @@ import {registerEvents} from './station.events';
 
 var StationSchema = new mongoose.Schema({
   name: String,
-  info: String,
-  active: Boolean
+  description: String,
+  active: Boolean,
+  lat: Number,
+  lon: Number,
+  status: String,
+  type: String,
 });
 
 registerEvents(StationSchema);

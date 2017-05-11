@@ -16,7 +16,7 @@
       subject : subject,
       text : message
     }
-    console.log(mailOptions);
+    //console.log(mailOptions);
     smtpTransport.sendMail(mailOptions, function(error, response){
     if(error){
         console.log(error);

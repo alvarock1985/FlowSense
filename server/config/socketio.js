@@ -16,6 +16,9 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/client/client.socket').register(socket);
+  require('../api/sensor/sensor.socket').register(socket);
+  require('../api/river/river.socket').register(socket);
   require('../api/rtm/rtm.socket').register(socket);
   require('../api/monoptions/monoptions.socket').register(socket);
   require('../api/station/station.socket').register(socket);

@@ -72,7 +72,7 @@ export function infoWindowController($http) {
     $http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/stations/data/'+stationId)
     .then(response => {
       var stationData = response.data[0];
-
+      console.log(stationData);
 
       this.posData = [];
       this.labels = stationData.dataTimestamp;
