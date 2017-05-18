@@ -23,11 +23,11 @@ export default function statusMonitor(_interval){
         emailId = response.body[0].emailId;
         //console.log(emailId);
         if(newInterval===interval){
-          console.log("interval is same no changes required");
+          console.log("Monitor: interval is same no changes required");
 
         }else{
           interval = newInterval;
-          console.log("interval has changed starting new monitor with "+(newInterval/1000)+" seconds of interval");
+          console.log("Monitor: interval has changed starting new monitor with "+(newInterval/1000)+" seconds of interval");
           isSame = false;
           clearInterval(startMonitor);
           var newMonitor = setInterval(monitor, newInterval);

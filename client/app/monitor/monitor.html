@@ -1,25 +1,85 @@
 <div class="container">
       <div class="col-sm-6">
-        <h3>Configuracion monitoreo</h3>
+        <h3>Configuracion monitoreo</h3><br>
+        <h4>Monitor de estado de estaciones</h4><br>
         <div class="form-group">
-          <label for="number">Ingrese intervalo en minutos [1-60] {{monitorCtrl.interval}}</label>
-          <input type="number" ng-model="monitorCtrl.interval" class="form-control" id="number" min="1" max="60" required>
-          <label for="email">Ingrese Email para envio de alarmas {{monitorCtrl.emailId}}</label>
-          <input type="email" name="email" ng-model="monitorCtrl.emailId" class="form-control" required><br>
+          <label for="number">Ingrese intervalo en minutos </label>
+          <input type="number" ng-model="monitorCtrl.interval" class="form-control" id="number" min="1" max="60" placeholder="Ingrese intervalo de tiempo para monitoreo en minutos" required>
+          <label for="email">Ingrese Email para envio de alarmas </label>
+          <input type="email" name="email" ng-model="monitorCtrl.emailId" class="form-control" placeholder="Ingrese direccion de e-mail para envio de alarmas" required><br>
           <button type="submit" name="button" class="btn btn-default" ng-click="monitorCtrl.sendConfig(); monitorCtrl.$onInit()">Enviar</button>
-        </div>
+        </div><br>
+        <h4>Configuracion de alarmas</h4><br>
+          <div class="form-group">
+            <form>
+              <p>Configuracion global</p>
+              <label for="selectConfig" class="switch">
+                <input type="checkbox" ng-model="monitorCtrl.selectType" id="selectConfig">
+                <div class="slider round"></div>
+              </label>
+            </form>
+            <div ng-hide="monitorCtrl.selectType">
+              <p>Seleccionar estacion:</p>
+              <select  name="stationId" ng-model="monitorCtrl.stationId" ng-options="station.id as station.description for station in monitorCtrl.stations" >
+              </select>
+            </div>
+            <div ><br>
+            <div class="form-group">
+              <label for="holdtime">Rango de espera sin datos[min]: </label>
+              <input type="number" min="1" max="60" id="holdtime" class="form-control" placeholder="Ingrese tiempo de espera valor de 1 a 60" ng-model="monitorCtrl.holdTimeData">
+              <label for="holdTime2">Rando de espera umbral[min]: </label>
+              <input type="number" min="1" max="60" id="holdtime" class="form-control" placeholder="Ingrese tiempo de espera valor de 1 a 60" ng-model="monitorCtrl.holdTimeRange">
+              <label for="rangeMax">Valor Maximo</label>
+              <input type="number" min="1" max="100" id="rangeMax" class="form-control" placeholder="Ingrese rango de tolerancia maximo valor de 1 a 100" ng-model="monitorCtrl.rangeMax">
+              <label for="rangeMin">Valor Minimo</label>
+              <input type="number" min="0" max="99" id="rangeMin" class="form-control" placeholder="Ingrese rango de tolerancia minima valor de 0 a 99" ng-model="monitorCtrl.rangeMin"><br>
+              <button type="submit" name="button" class="btn btn-default" ng-click="monitorCtrl.sendConfigV2()">Enviar</button>
+            </div>
 
+            </div>
+          </div>
 
       </div>
 
       <div class="col-sm-6">
 
         <h3>Configuracion actual</h3>
+        <h4>Configuracion global</h4>
         <table class="table">
-          <tr><p>Intervalo de monitoreo: {{monitorCtrl.configuration.interval}} minuto(s)</p></tr>
-          <tr><p>Envio de alertas: {{monitorCtrl.configuration.emailId}}</p></tr>
+          <th>Intervalo monitoreo</th>
+          <th>Email</th>
+          <th>Tolerancia datos</th>
+          <th>Tolerancia umbral</th>
+          <th>Rango minimo</th>
+          <th>Rango maximo</th>
+          <tr style="font-style: italic">
+            <td>{{monitorCtrl.globalMonitor.sendTime}} min</td>
+            <td>{{monitorCtrl.globalMonitor.email}}</td>
+            <td>{{monitorCtrl.globalMonitor.holdTimeData}} min</td>
+            <td>{{monitorCtrl.globalMonitor.holdTimeRange}} min</td>
+            <td>{{monitorCtrl.globalMonitor.rangeMin}} min</td>
+            <td>{{monitorCtrl.globalMonitor.rangeMax}} min</td>
+          </tr>
         </table>
-
+        <h4>Configuracion por estacion</h4>
+        <table class="table">
+          <th>Nombre estacion</th>
+          <th>Intervalo monitoreo</th>
+          <th>Email</th>
+          <th>Tolerancia datos</th>
+          <th>Tolerancia umbral</th>
+          <th>Rango minimo</th>
+          <th>Rango maximo</th>
+          <tr style="font-style: italic" ng-repeat="monitor in monitorCtrl.newMonitors">
+            <td>{{monitor.name}}</td>
+            <td>{{monitor.sendTime}} min</td>
+            <td>{{monitor.email}}</td>
+            <td>{{monitor.holdTimeData}} min</td>
+            <td>{{monitor.holdTimeRange}} min</td>
+            <td>{{monitor.rangeMin}} min</td>
+            <td>{{monitor.rangeMax}} min</td>
+          </tr>
+        </table>
 
 
       </div>

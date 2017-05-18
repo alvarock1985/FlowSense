@@ -19,6 +19,7 @@ export class ClientComponent {
     this.rangeMin = null;
     this.rangeMax = null;
     this.isActive = null;
+    this.edit = false;
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('client');
@@ -30,13 +31,23 @@ export class ClientComponent {
     this.$http.get('/api/clients')
     .then(response => {
       this.clients = response.data;
-      console.log(this.clients);
+
     })
 
     this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/stations')
     .then(response => {
       this.stations = response.data;
       this.socket.syncUpdates('client', this.clients);
+      for(var i in this.clients){
+        this.checkActive = this.clients[i].isActive;
+        this.clients[i].edit = false;
+          for(var m in this.stations){
+            if(this.clients[i].stationId===this.stations[m].id){
+              this.clients[i].name = this.stations[m].description;
+
+            }
+          }
+      }
     })
   }
 
@@ -55,6 +66,26 @@ export class ClientComponent {
     .then(response => {
       console.log(response.status);
     })
+
+    this.reloadName();
+
+  }
+
+  reloadName(){
+    this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/stations')
+    .then(response => {
+      this.stations = response.data;
+      this.socket.syncUpdates('client', this.clients);
+      for(var i in this.clients){
+        this.checkActive = this.clients[i].isActive;
+        this.clients[i].edit = false;
+          for(var m in this.stations){
+            if(this.clients[i].stationId===this.stations[m].id){
+              this.clients[i].name = this.stations[m].description;
+            }
+          }
+      }
+    })
   }
 
   getSensors(stationId){
@@ -62,6 +93,20 @@ export class ClientComponent {
     .then(response => {
       this.sensors = response.data;
     })
+  }
+
+  editData(client){
+    client.edit = true;
+  }
+
+  disableEdit(client){
+    client.edit=false;
+  }
+
+  updateClient(client){
+    var toPatch = JSON.stringify(client);
+    this.$http.put(`/api/clients/${client._id}`, client);
+    
   }
 
   deleteClient(client){

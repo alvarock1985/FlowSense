@@ -47,6 +47,7 @@ import monitor from './monitor/monitor.component';
 import about from './about/about.component';
 import rtm from './rtm/rtm.component';
 import client from './client/client.component';
+import alarm from './alarm/alarm.component';
 
 
 
@@ -61,7 +62,7 @@ angular.module('flowSenseApp', [ngCookies, ngResource, ngSanitize, 'btford.socke
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
   socket, util, maps, 'nemLogging', 'uiGmapgoogle-maps', ngAnimate, infoWindow, infoWindowController,
   'chart.js', Reports, config, addStation, addSensor, summary, failEmulator, failStation, failSensor,
-  cosas, parametros, monitor, about, rtm, client
+  cosas, parametros, monitor, about, rtm, client, alarm
 
 
 ])

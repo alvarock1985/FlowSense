@@ -89,7 +89,7 @@ var defaultReq = {
 var interval = checkMonitorInterval(defaultReq);
 console.log("inverval: "+interval);
 statusMonitor(30000);
-//seedDatabaseIfNeeded();
+seedDatabaseIfNeeded();
 startClients(10000);
 setImmediate(startServer);
 

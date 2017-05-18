@@ -1,10 +1,11 @@
 <div class="container">
   <div class="col-sm-6">
+    <h3>Configurar nuevo cliente</h3><br>
     <form ng-submit="clientCtrl.postClient()">
-      <p>Seleccionar estacion: {{clientCtrl.stationId}}</p>
+      <p>Seleccionar estacion:</p>
       <select  name="stationId" ng-model="clientCtrl.stationId" ng-options="station.id as station.description for station in clientCtrl.stations" ng-change="clientCtrl.getSensors(clientCtrl.stationId)">
       </select>
-      <p>Seleccionar sensor: {{clientCtrl.sensorId}}</p>
+      <p>Seleccionar sensor: </p>
       <select  name="sensorId" ng-model="clientCtrl.sensorId" ng-options="sensor.id as sensor.name for sensor in clientCtrl.sensors">
 
       </select>
@@ -14,7 +15,7 @@
       <input type="number" ng-model="clientCtrl.rangeMin">
       <p>Ingresar rango maximo: </p>
       <input type="number" ng-model="clientCtrl.rangeMax"><br><br>
-      <p>Activar? {{clientCtrl.isActive}}</p>
+      <p>Activar {{clientCtrl.isActive}}</p>
       <label class="switch">
         <input type="checkbox" ng-model="clientCtrl.isActive">
         <div class="slider round"></div>
@@ -25,10 +26,34 @@
   </div>
 
   <div class="col-sm-6">
-    <ul ng-repeat="client in clientCtrl.clients">
-      <li>{{client._id}}<button type="button" name="borrar"  ng-click="clientCtrl.deleteClient(client)"></button></li>
-
-    </ul>
-
+    <h3>Clientes configurados</h3>
+    <div >
+      <table class="table">
+        <th>Estacion</th>
+        <th>Sensor</th>
+        <th>Intervalo [min]</th>
+        <th>Min</th>
+        <th>Max</th>
+        <th>Activado</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <tr ng-repeat="client in clientCtrl.clients">
+          <td>{{client.name}}</td>
+          <td>{{client.sensorId}}</td>
+          <td ng-hide="client.edit">{{client.monInterval}}</td>
+          <td ng-show="client.edit"><input type="number" ng-model="client.monInterval" min="1" max="99" style="width: 3em"></td>
+          <td ng-hide="client.edit">{{client.rangeMin}}</td>
+          <td ng-show="client.edit"><input type="number" ng-model="client.rangeMin" min="1" max="99" style="width: 3em"></td>
+          <td ng-hide="client.edit">{{client.rangeMax}}</td>
+          <td ng-show="client.edit"><input type="number" ng-model="client.rangeMax" min="1" max="99" style="width: 3em"></td>
+          <td><input type="checkbox" ng-model="client.isActive"></td>
+          <td><a ng-hide="client.edit" ng-click="clientCtrl.editData(client)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+          <td><a ng-show="client.edit" ng-click="clientCtrl.disableEdit(client)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+          <td><a ng-click="clientCtrl.updateClient(client)" class="trash" title="Guardar"><span  class="fa fa-check fa-1x"></span></a></td>
+          <td><a ng-click="clientCtrl.deleteClient(client)" class="trash" title="Eliminar"><span class="fa fa-trash fa-1x"></span></a></td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>

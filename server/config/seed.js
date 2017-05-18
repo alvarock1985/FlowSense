@@ -6,6 +6,7 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import Monoption from '../api/monoptions/monoptions.model';
+import Monitor from '../api/monitor/monitor.model';
 import User from '../api/user/user.model';
 import config from './environment/';
 
@@ -24,6 +25,22 @@ export default function seedDatabaseIfNeeded() {
         .then(() => console.log('finished polulating monitor options'))
         .catch(err => console.log('error polulating monitor options', err));
       })
+
+    Monitor.find({}).remove()
+    .then(() => {
+      Monitor.create({
+        stationId: null,
+        isGlobal: true,
+        email: 'test@example.com',
+        sendTime: 30,
+        holdTimeData: 5,
+        holdTimeRange: 5,
+        rangeMax: 100,
+        rangeMin: 1
+      })
+      .then(() => console.log("Monitor default options loaded"))
+      .catch(err => console.log("Error on loading monitor defaults", err));
+    })
 
     User.find({})
       .then(() => {
