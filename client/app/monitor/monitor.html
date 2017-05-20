@@ -7,8 +7,7 @@
           <input type="number" ng-model="monitorCtrl.interval" class="form-control" id="number" min="1" max="60" placeholder="Ingrese intervalo de tiempo para monitoreo en minutos" required>
           <label for="email">Ingrese Email para envio de alarmas </label>
           <input type="email" name="email" ng-model="monitorCtrl.emailId" class="form-control" placeholder="Ingrese direccion de e-mail para envio de alarmas" required><br>
-          <button type="submit" name="button" class="btn btn-default" ng-click="monitorCtrl.sendConfig(); monitorCtrl.$onInit()">Enviar</button>
-        </div><br>
+          </div><br>
         <h4>Configuracion de alarmas</h4><br>
           <div class="form-group">
             <form>
@@ -52,13 +51,27 @@
           <th>Tolerancia umbral</th>
           <th>Rango minimo</th>
           <th>Rango maximo</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
           <tr style="font-style: italic">
-            <td>{{monitorCtrl.globalMonitor.sendTime}} min</td>
-            <td>{{monitorCtrl.globalMonitor.email}}</td>
-            <td>{{monitorCtrl.globalMonitor.holdTimeData}} min</td>
-            <td>{{monitorCtrl.globalMonitor.holdTimeRange}} min</td>
-            <td>{{monitorCtrl.globalMonitor.rangeMin}} min</td>
-            <td>{{monitorCtrl.globalMonitor.rangeMax}} min</td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.sendTime}} min</td>
+            <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.sendTime" min="1" max="60" style="width: 3em"></td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.email}}</td>
+            <td ng-show="monitorCtrl.globalMonitor.edit"><input type="email" ng-model="monitorCtrl.globalMonitor.email"></td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.holdTimeData}} min</td>
+            <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.holdTimeData" min="1" max="60" style="width: 3em"></td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.holdTimeRange}} min</td>
+            <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.holdTimeRange" min="1" max="60" style="width: 3em"></td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.rangeMin}} min</td>
+            <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.rangeMin" min="1" max="100" style="width: 3em"></td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.rangeMax}} min</td>
+            <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.rangeMax" min="0" max="99" style="width: 3em"></td>
+            <td><a ng-hide="monitorCtrl.globalMonitor.edit" ng-click="monitorCtrl.editData(globalMonitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+            <td><a ng-show="monitorCtrl.globalMonitor.edit" ng-click="monitorCtrl.disableEdit(globalMonitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+            <td><a ng-click="monitorCtrl.updateMonitor(monitorCtrl.globalMonitor)" class="trash" title="Guardar"><span  class="fa fa-check fa-1x"></span></a></td>
+            <td><a ng-click="monitorCtrl.deleteMonitor(monitorCtrl.globalMonitor)" class="trash" title="Eliminar"><span class="fa fa-trash fa-1x"></span></a></td>
           </tr>
         </table>
         <h4>Configuracion por estacion</h4>

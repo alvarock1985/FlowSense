@@ -43,7 +43,7 @@ import failStation from './failStation/failStation.component';
 import failSensor from './failSensor/failSensor.component';
 import cosas from './cosas/cosas.component';
 import parametros from './parametros/parametros.component';
-import monitor from './monitor/monitor.component';
+import monitorClient from './monitor/monitor.component';
 import about from './about/about.component';
 import rtm from './rtm/rtm.component';
 import client from './client/client.component';
@@ -62,7 +62,7 @@ angular.module('flowSenseApp', [ngCookies, ngResource, ngSanitize, 'btford.socke
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
   socket, util, maps, 'nemLogging', 'uiGmapgoogle-maps', ngAnimate, infoWindow, infoWindowController,
   'chart.js', Reports, config, addStation, addSensor, summary, failEmulator, failStation, failSensor,
-  cosas, parametros, monitor, about, rtm, client, alarm
+  cosas, parametros, monitorClient, about, rtm, client, alarm
 
 
 ])

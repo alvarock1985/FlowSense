@@ -8,11 +8,13 @@ import routes from './monitor.routes';
 export class MonitorComponent {
   $http;
   socket;
+  $scope;
   newMonitors = [];
   /*@ngInject*/
-  constructor($http, socket) {
+  constructor($http, socket, $scope) {
     this.$http = $http;
     this.socket = socket;
+    this.$scope = $scope;
     this.inverval="";
     this.emailId = '';
     this.configInterval = "";
@@ -23,6 +25,9 @@ export class MonitorComponent {
     this.holdTimeRange = null;
     this.rangeMax = null;
     this.rangeMin = null;
+    this.edit = false;
+
+  
   }
 
   $onInit(){
@@ -42,6 +47,7 @@ export class MonitorComponent {
       for(var i in this.monitors){
         if(this.monitors[i].isGlobal==='true'){
           this.globalMonitor = this.monitors[i];
+          this.globalMonitor.edit = false;
         }else{
           if(this.monitors[i].stationId!=='null'){
             this.newMonitors.push(this.monitors[i]);
@@ -62,6 +68,7 @@ export class MonitorComponent {
         for(var m in this.newMonitors){
           if(this.stations[i].id===this.newMonitors[m].stationId){
             this.newMonitors[m].name = this.stations[i].description;
+            this.newMonitors[m].edit = false;
           }
         }
       }
@@ -112,6 +119,27 @@ export class MonitorComponent {
         console.log(response.status);
       })
     }
+
+  }
+
+  editData(monitor){
+    this.globalMonitor.edit = true;
+  }
+
+  disableEdit(client){
+    this.globalMonitor.edit=false;
+  }
+
+  deleteMonitor(monitor){
+    this.$http.delete(`/api/monitors/${monitor._id}`);
+  }
+
+  updateMonitor(monitor){
+    var toPut = JSON.stringify(monitor);
+    this.$http.put(`/api/monitors/${monitor._id}`, toPut)
+    .then(response => {
+      console.log(response.status);
+    })
 
   }
 
