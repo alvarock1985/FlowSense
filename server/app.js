@@ -16,6 +16,7 @@ import sendEmail from './config/mailer';
 import checkMonitorInterval from './api/monoptions/checkInterval';
 import startClients from './config/client';
 import monitorV2 from './config/monitorVersion2';
+import clientVersion2 from './config/clientVersion2';
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -91,8 +92,9 @@ var interval = checkMonitorInterval(defaultReq);
 console.log("inverval: "+interval);
 //statusMonitor(30000);
 //seedDatabaseIfNeeded();
-startClients(10000);
+//startClients(10000);
 monitorV2();
+clientVersion2();
 setImmediate(startServer);
 
 // Expose app

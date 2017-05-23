@@ -64,14 +64,14 @@
             <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.holdTimeData" min="1" max="60" style="width: 3em"></td>
             <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.holdTimeRange}} min</td>
             <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.holdTimeRange" min="1" max="60" style="width: 3em"></td>
-            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.rangeMin}} min</td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.rangeMin}} </td>
             <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.rangeMin" min="1" max="100" style="width: 3em"></td>
-            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.rangeMax}} min</td>
+            <td ng-hide="monitorCtrl.globalMonitor.edit">{{monitorCtrl.globalMonitor.rangeMax}} </td>
             <td ng-show="monitorCtrl.globalMonitor.edit"><input type="number" ng-model="monitorCtrl.globalMonitor.rangeMax" min="0" max="99" style="width: 3em"></td>
-            <td><a ng-hide="monitorCtrl.globalMonitor.edit" ng-click="monitorCtrl.editData(globalMonitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
-            <td><a ng-show="monitorCtrl.globalMonitor.edit" ng-click="monitorCtrl.disableEdit(globalMonitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+            <td><a ng-hide="monitorCtrl.globalMonitor.edit" ng-click="monitorCtrl.editData(monitorCtrl.globalMonitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+            <td><a ng-show="monitorCtrl.globalMonitor.edit" ng-click="monitorCtrl.disableEdit(monitorCtrl.globalMonitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
             <td><a ng-click="monitorCtrl.updateMonitor(monitorCtrl.globalMonitor)" class="trash" title="Guardar"><span  class="fa fa-check fa-1x"></span></a></td>
-            <td><a ng-click="monitorCtrl.deleteMonitor(monitorCtrl.globalMonitor)" class="trash" title="Eliminar"><span class="fa fa-trash fa-1x"></span></a></td>
+
           </tr>
         </table>
         <h4>Configuracion por estacion</h4>
@@ -83,14 +83,28 @@
           <th>Tolerancia umbral</th>
           <th>Rango minimo</th>
           <th>Rango maximo</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
           <tr style="font-style: italic" ng-repeat="monitor in monitorCtrl.newMonitors">
-            <td>{{monitor.name}}</td>
-            <td>{{monitor.sendTime}} min</td>
-            <td>{{monitor.email}}</td>
-            <td>{{monitor.holdTimeData}} min</td>
-            <td>{{monitor.holdTimeRange}} min</td>
-            <td>{{monitor.rangeMin}} min</td>
-            <td>{{monitor.rangeMax}} min</td>
+            <td >{{monitor.name}}</td>
+            <td ng-hide="monitor.edit">{{monitor.sendTime}} min</td>
+            <td ng-show="monitor.edit"><input type="number" ng-model="monitor.sendTime" min="1" max="60" style="width: 3em"></td>
+            <td ng-hide="monitor.edit">{{monitor.email}}</td>
+            <td ng-show="monitor.edit"><input type="email" ng-model="monitor.email"></td>
+            <td ng-hide="monitor.edit">{{monitor.holdTimeData}} min</td>
+            <td ng-show="monitor.edit"><input type="number" ng-model="monitor.holdTimeData" min="1" max="60" style="width: 3em"></td>
+            <td ng-hide="monitor.edit">{{monitor.holdTimeRange}} min</td>
+            <td ng-show="monitor.edit"><input type="number" ng-model="monitor.holdTimeRange" min="1" max="60" style="width: 3em"></td>
+            <td ng-hide="monitor.edit">{{monitor.rangeMin}} </td>
+            <td ng-show="monitor.edit"><input type="number" ng-model="monitor.rangeMin" min="1" max="99" style="width: 3em"></td>
+            <td ng-hide="monitor.edit">{{monitor.rangeMax}} </td>
+            <td ng-show="monitor.edit"><input type="number" ng-model="monitor.rangeMax" min="1" max="100" style="width: 3em"></td>
+            <td><a ng-hide="monitor.edit" ng-click="monitorCtrl.editData(monitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+            <td><a ng-show="monitor.edit" ng-click="monitorCtrl.disableEdit(monitor)" class="trash"><span class="fa fa-edit fa-1x"></span></a></td>
+            <td><a ng-click="monitorCtrl.updateMonitor(monitor)" class="trash" title="Guardar"><span  class="fa fa-check fa-1x"></span></a></td>
+            <td><a ng-click="monitorCtrl.deleteMonitor(monitor)" class="trash" title="Eliminar"><span class="fa fa-trash fa-1x"></span></a></td>
           </tr>
         </table>
 

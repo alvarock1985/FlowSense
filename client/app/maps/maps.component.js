@@ -96,11 +96,22 @@ export class MapsComponent {
   }
 
   $onInit(){
-
+      var sensors;
       this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/rivers')
       .then(response => {
         this.rivers = response.data;
       });
+
+      this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/stations')
+      .then(response =>{
+        this.stations = response.data;
+      })
+
+      this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/sensors')
+      .then(response =>{
+        this.sensors = response.data;
+      })
+
   }
 
 

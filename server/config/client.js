@@ -1,9 +1,22 @@
 'use strict';
 import client from '../api/client/client.model';
 import unirest from 'unirest';
+import winston  from 'winston';
+
 
 export default function startClients(_interval){
-  console.log("starting clients");
+  var logger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.Console)(),
+      new (winston.transports.File)({ filename: 'client/assets/logs/client.log' })
+    ]
+  });
+
+
+  //logger.add(winston.transports.File, { filename: 'client.log' });
+  logger.log('info', "Starting Clients");
+  logger.remove(winston.transports.Console);
+  logger.level = 'info';
   var _interval = _interval;
   var newInterval = '';
   var runClientsInt;
@@ -12,11 +25,11 @@ export default function startClients(_interval){
     var _interval = numero;
     var newInterval = client.monInterval;
     if(_interval === newInterval){
-      console.log("interval for client is same,  no changes required");
+      logger.log('info', "interval for client is same,  no changes required");
       return false;
     }else{
       var interval = newInterval;
-      console.log("interval has changed starting new monitor with "+newInterval+" seconds of interval");
+      logger.log('info',"interval has changed starting new monitor with "+newInterval+" seconds of interval" )
       return true;
 
     }
@@ -29,10 +42,11 @@ export default function startClients(_interval){
     var min = client.rangeMin;
     var max = client.rangeMax;
     var interval = client.monInterval;
-    console.log("Client: running client at: "+interval+" seconds of interval");
+    logger.log('info',"Client: running client at: "+interval+" seconds of interval" );
     var dataValue = Math.round((Math.random()*max)+min);
     if(isActive){
-      console.log("sendind data for sensor id: "+sensorId)
+      logger.log('info', "sendind data for sensor id: "+sensorId);
+
       var url = 'http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/add/proto'
       unirest.post(url)
       .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
@@ -41,7 +55,7 @@ export default function startClients(_interval){
               //console.log(response.status);
       });
     }else{
-      console.log("Client for sensor: "+sensorId+" is disabled");
+      logger.log('info', "Client for sensor: "+sensorId+" is disabled");
     }
   }
 
@@ -55,7 +69,7 @@ export default function startClients(_interval){
       return dataClients;
     }else{
       return undefined;
-      console.log("Client: loading Data");
+      logger.log('info',"Client: loading Data" );
     }
   }
 
@@ -63,17 +77,17 @@ export default function startClients(_interval){
       var clients;
       var newClients;
       var initData = setInterval(function(){
-        console.log("Client: getting initial data");
+        logger.log('info', "Client: getting initial data");
         client.find({})
         .then(data => {
           clients = data;
         })
         if(clients!==undefined){
-          console.log("Client: data load complete!");
+          logger.log('info',"Client: data load complete!" );
           clearInterval(initData);
           console.log(clients);
         }else{
-          console.log("Client: loading data");
+          logger.log('info', "Client: loading data");
         }
       }, 1000);
 
@@ -85,10 +99,9 @@ export default function startClients(_interval){
           })
           if(newClients!==undefined){
             if(newClients.length===clients.length){
-              console.log("Client: values are the same: "+newClients.length);
-
+              logger.log('info', "Client: values are the same: "+newClients.length);
             }else{
-              console.log("Client: values changed: "+newClients.length);
+              logger.log('info', "Client: values changed: "+newClients.length);
               clients = newClients;
               execClient();
             }
@@ -108,7 +121,7 @@ export default function startClients(_interval){
             })
             clearInterval(start);
           }else{
-            console.log("Client: starting parameters");
+            logger.log('info', "Client: starting parameters");
           }
 
         }, 1000);

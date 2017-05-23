@@ -99,7 +99,7 @@ export class RtmComponent {
 
 
   loadSensorData(){
-    this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/last/30/57')
+    this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/last/30/55')
     .then(response => {
       this.dataSensor = response.data;
       for (var i in this.dataSensor){
@@ -114,7 +114,7 @@ export class RtmComponent {
   reloadData(){
     this.$scope.labels = this.$scope.labels.slice(1);
     this.$scope.data[0] = this.$scope.data[0].slice(1);
-    this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/last/1/57')
+    this.$http.get('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/datasensors/last/1/55')
     .then(response => {
       var value = response.data[0].data;
       this.$scope.data[0].push(value);

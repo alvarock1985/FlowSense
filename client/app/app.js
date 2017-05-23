@@ -11,6 +11,7 @@ import 'angular-socket-io';
 import 'angular-google-maps';
 import 'angular-simple-logger';
 import 'angular-chart.js';
+import 'angular-ui-notification';
 
 
 import uiRouter from 'angular-ui-router';
@@ -56,17 +57,31 @@ import alarm from './alarm/alarm.component';
 
 
 
+
 import './app.scss';
 
 angular.module('flowSenseApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
   socket, util, maps, 'nemLogging', 'uiGmapgoogle-maps', ngAnimate, infoWindow, infoWindowController,
   'chart.js', Reports, config, addStation, addSensor, summary, failEmulator, failStation, failSensor,
-  cosas, parametros, monitorClient, about, rtm, client, alarm
+  cosas, parametros, monitorClient, about, rtm, client, alarm, 'ui-notification'
 
 
 ])
   .config(routeConfig)
+
+  .config(function(NotificationProvider) {
+    'ngInject';
+        NotificationProvider.setOptions({
+            delay: 2000,
+            startTop: 20,
+            startRight: 10,
+            verticalSpacing: 20,
+            horizontalSpacing: 20,
+            positionX: 'right',
+            positionY: 'top'
+        });
+    })
 
   .config(function(uiGmapGoogleMapApiProvider) {
     'ngInject';

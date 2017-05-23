@@ -8,8 +8,10 @@ import routes from './client.routes';
 export class ClientComponent {
   clients = [];
 
+
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, Notification) {
+    this.Notification = Notification;
     this.socket = socket;
     this.$scope = $scope;
     this.$http = $http;
@@ -21,9 +23,22 @@ export class ClientComponent {
     this.isActive = null;
     this.edit = false;
 
+    this.success = function(client){
+      this.Notification.success('Datos enviados para sensor: '+client.sensorId);
+    }
+    this.delete = function(client){
+      this.Notification.error('Cliente eliminado');
+    }
+    this.error = function(){
+      this.Notification.error('Error al enviar datos');
+    }
+    this.primary = function(){
+      this.Notification('Primaty notfication');
+    };
+
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('client');
-});
+    });
 
   }
 
@@ -65,6 +80,7 @@ export class ClientComponent {
     this.$http.post('/api/clients', toPost)
     .then(response => {
       console.log(response.status);
+      this.success(data);
     })
 
     this.reloadName();
@@ -105,12 +121,20 @@ export class ClientComponent {
 
   updateClient(client){
     var toPatch = JSON.stringify(client);
-    this.$http.put(`/api/clients/${client._id}`, client);
-    
+    this.$http.put(`/api/clients/${client._id}`, client)
+    .then(response =>{
+      if(response.status===200){
+        this.success(client);
+      }else{
+        this.error();
+      }
+    })
+
   }
 
   deleteClient(client){
     this.$http.delete(`/api/clients/${client._id}`);
+    this.delete(client);
   }
 }
 

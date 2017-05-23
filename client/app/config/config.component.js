@@ -8,9 +8,12 @@ import routes from './config.routes';
 export class ConfigComponent {
   /*@ngInject*/
   constructor() {
+
     this.message = 'Hello';
   }
 }
+
+
 
 export default angular.module('flowSenseApp.config', [uiRouter])
   .config(routes)
