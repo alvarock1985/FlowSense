@@ -9,7 +9,8 @@ export class AddSensorComponent {
   $http;
   $scope;
   /*@ngInject*/
-  constructor($http) {
+  constructor($http, Notification) {
+    this.Notification = Notification;
     this.$http = $http;
     this.names= ["caudal", "temp", "precip", "hum", "nieve"];
     this.name = null;
@@ -17,6 +18,19 @@ export class AddSensorComponent {
     this.type = null;
     this.stationId = null;
     this.status = "";
+
+    this.success = function(){
+      this.Notification.success('Datos enviados correctamente');
+    }
+    this.delete = function(){
+      this.Notification.error('Monitor eliminado');
+    }
+    this.error = function(){
+      this.Notification.error('Error al enviar datos');
+    }
+    this.primary = function(){
+      this.Notification('Primaty notfication');
+    };
 
 
   }
@@ -39,10 +53,10 @@ export class AddSensorComponent {
     this.$http.post('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/sensors/add', toPost)
     .then(response => {
       console.log(response.status)
-      if(response.status === 204){
-        this.status ="datos enviados correctamente";
+      if(response.status===200){
+        this.success();
       }else{
-        this.status = "error al enviar los datos";
+        this.success();
       }
     })
 

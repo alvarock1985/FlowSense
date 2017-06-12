@@ -9,16 +9,16 @@ export class AddStationComponent {
   /*@ngInject*/
   $scope;
   $http;
-  constructor($http, $scope) {
-
+  constructor($http, $scope, Notification) {
+    this.Notification = Notification;
     this.$http = $http;
     this.data = {};
     this.riverId = 4;
-    this.name =  "hola";
-    this.description = "hola";
+    this.name;
+    this.description;
     this.longitude  = $scope.lon;
     this.latitude =  $scope.lat;
-    this.type = "hola";
+    this.type ;
     this.watershed = 4;
     this.status = "";
     $scope.markers = [];
@@ -64,6 +64,19 @@ export class AddStationComponent {
                 }
             }
         };
+
+        this.success = function(){
+          this.Notification.success('Datos enviados correctamente');
+        }
+        this.delete = function(){
+          this.Notification.error('Monitor eliminado');
+        }
+        this.error = function(){
+          this.Notification.error('Error al enviar datos');
+        }
+        this.primary = function(){
+          this.Notification('Primaty notfication');
+        };
   }
 
   $onInit(){
@@ -89,9 +102,15 @@ export class AddStationComponent {
         var toPost = JSON.stringify(data);
         console.log(toPost);
         this.$http.post('http://mon.acmeapps.xyz:8080/EmuSensor/webapi/stations/add', toPost)
-        .then(response => {
-          console.log(response.status);
-          this.status = "datos enviados correctamente";
+        .then(res => {
+
+          //this.status = "datos enviados correctamente";
+          console.log(res.status);
+          if(res.status===204){
+            this.success();
+          }else{
+            this.error();
+          }
         });
 }
 

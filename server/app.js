@@ -17,6 +17,7 @@ import checkMonitorInterval from './api/monoptions/checkInterval';
 import startClients from './config/client';
 import monitorV2 from './config/monitorVersion2';
 import clientVersion2 from './config/clientVersion2';
+import drift from './config/drifts';
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -35,7 +36,7 @@ var socketio = require('socket.io')(server, {
 require('./config/socketio').default(socketio);
 require('./config/express').default(app);
 require('./routes').default(app);
-
+require('events').EventEmitter.prototype._maxListeners = 100;
 // Start server
 function startServer() {
   app.angularFullstack = server.listen(config.port, config.ip, function() {
@@ -93,8 +94,9 @@ console.log("inverval: "+interval);
 //statusMonitor(30000);
 //seedDatabaseIfNeeded();
 //startClients(10000);
-monitorV2();
+//monitorV2();
 clientVersion2();
+drift();
 setImmediate(startServer);
 
 // Expose app

@@ -10,7 +10,7 @@ export default function monitorV2(){
 
   winston.add(winston.transports.File, { filename: 'client/assets/logs/monitorV2.log' });
   winston.log('info', "Starting monitor");
-  winston.remove(winston.transports.Console);
+  //winston.remove(winston.transports.Console);
   winston.level = 'info';
 
   var sensors;
@@ -164,6 +164,7 @@ export default function monitorV2(){
             var compare = currentTime - (config.holdTimeData*60000);
             if(lastDateSensor<compare ){
               winston.log('info', "The station: "+station.description+" is not sending data setting sensor as FAIL");
+              console.log("The station: "+station.description+" is not sending data setting sensor as FAIL");
               var url = "http://mon.acmeapps.xyz:8080/EmuSensor/webapi/sensors/updateStatus";
               //console.log(localSensors[i].id)
               unirest.post(url)
@@ -174,6 +175,7 @@ export default function monitorV2(){
               });
             }else{
               winston.log('info', "The station: "+station.description+" is sending data correctly setting sensor as OK");
+              console.log("The station: "+station.description+" is sending data correctly setting sensor as OK");
               var url = "http://mon.acmeapps.xyz:8080/EmuSensor/webapi/sensors/updateStatus";
               unirest.post(url)
               .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
@@ -185,14 +187,14 @@ export default function monitorV2(){
           }
         })
       }
-    }, 120000);
+    }, 5000);
     intervals.push(checkDataInt);
   }
 
   function checkRange(config, station){
     winston.log('info', "Starting to check ranges with ranges "+config.rangeMin+" as min and "+config.rangeMax+" as max for station: "+station.description )
     winston.log('info', "CheckRange: checking every: "+config.holdTimeRange+" minutes");
-
+    console.log("CheckRange: checking every: "+config.holdTimeRange+" minutes");
     var localSensors = [];
     var localData = [];
     var dataSensors;
@@ -250,7 +252,7 @@ export default function monitorV2(){
 
         }
       }
-    }, 120000);
+    }, 5000);
     intervals.push(checkRangeInt);
   }
 
